@@ -1,3 +1,5 @@
+const { ObjectId } = require("mongodb");
+
 let hobbyGroupsCollection;
 
 // Injects the MongoDB database connection into this module
@@ -12,9 +14,13 @@ const getAllHobbyGroups = async () => {
 };
 
 // Fetches single hobby group items by its id
+const getSingleHobbyGroups = async (id) => {
+  const result = await hobbyGroupsCollection.findOne({ _id: new ObjectId(id) });
+  return result;
+};
 
 // Create new hobby group in the database
-const createHobbyGroups = async (hobbyGroup) => {
+const createHobbyGroup = async (hobbyGroup) => {
   const result = await hobbyGroupsCollection.insertOne(hobbyGroup);
   return result;
 };
@@ -23,4 +29,9 @@ const createHobbyGroups = async (hobbyGroup) => {
 
 // Delete a hobby group by its id
 
-module.exports = { injectDB, getAllHobbyGroups, createHobbyGroups };
+module.exports = {
+  injectDB,
+  getAllHobbyGroups,
+  getSingleHobbyGroups,
+  createHobbyGroup,
+};

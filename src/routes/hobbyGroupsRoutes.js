@@ -3,13 +3,17 @@ const router = express.Router();
 
 const {
   getHobbyGroups,
-  addHobbyGroups,
+  addHobbyGroup,
+  singleHobbyGroup,
 } = require("../controllers/hobbyGroupsController");
 
 // GET all hobby groups
-router.get("/hobby-groups", getHobbyGroups);
+router.get("/groups", getHobbyGroups);
+
+// GET Single hobby groups
+router.get("/groups/:id", singleHobbyGroup);
 
 // POST new hobby group
-router.post("/hobby-groups", addHobbyGroups);
+router.post("/groups", addHobbyGroup);
 
 module.exports = router;
