@@ -14,8 +14,16 @@ const getAllHobbyGroups = async () => {
 };
 
 // Fetches single hobby group items by its id
-const getSingleHobbyGroups = async (id) => {
+const getSingleHobbyGroup = async (id) => {
   const result = await hobbyGroupsCollection.findOne({ _id: new ObjectId(id) });
+  return result;
+};
+
+// Fetches  user's ALL  hobby groups items by email
+const getUserHobbyGroups = async (email) => {
+  const result = await hobbyGroupsCollection
+    .find({ userEmail: email })
+    .toArray();
   return result;
 };
 
@@ -32,6 +40,7 @@ const createHobbyGroup = async (hobbyGroup) => {
 module.exports = {
   injectDB,
   getAllHobbyGroups,
-  getSingleHobbyGroups,
+  getSingleHobbyGroup,
+  getUserHobbyGroups,
   createHobbyGroup,
 };

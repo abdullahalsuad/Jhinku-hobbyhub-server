@@ -1,6 +1,7 @@
 const {
   getAllHobbyGroups,
-  getSingleHobbyGroups,
+  getSingleHobbyGroup,
+  getUserHobbyGroups,
   createHobbyGroup,
 } = require("../models/hobbyGroupsModel");
 
@@ -18,7 +19,24 @@ const getHobbyGroups = async (req, res) => {
 const singleHobbyGroup = async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await getSingleHobbyGroups(id);
+    const result = await getSingleHobbyGroup(id);
+
+    if (!result) {
+      return res.status(404).json({ message: "hobby group not found." });
+    }
+
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to get single hobby group" });
+  }
+};
+
+// Controller to fetch SINGLE hobbyGroup items
+const userHobbyGroups = async (req, res) => {
+  try {
+    const { email } = req.params;
+
+    const result = await getUserHobbyGroups(email);
 
     if (!result) {
       return res.status(404).json({ message: "hobby groups not found." });
@@ -26,7 +44,7 @@ const singleHobbyGroup = async (req, res) => {
 
     res.json(result);
   } catch (err) {
-    res.status(500).json({ error: "Failed to get single hobby groups" });
+    res.status(500).json({ error: "Failed to get user's hobby groups" });
   }
 };
 
@@ -43,4 +61,9 @@ const addHobbyGroup = async (req, res) => {
 // Controller to update hobbyGroup
 // Controller to delete hobbyGroup
 
-module.exports = { getHobbyGroups, addHobbyGroup, singleHobbyGroup };
+module.exports = {
+  getHobbyGroups,
+  addHobbyGroup,
+  singleHobbyGroup,
+  userHobbyGroups,
+};
