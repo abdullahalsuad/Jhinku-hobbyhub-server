@@ -12,7 +12,7 @@ const client = new MongoClient(uri, {
 async function connectDB() {
   try {
     // * need to comment on deploy
-    await client.connect();
+    // await client.connect();
     console.log("MongoDB connected successfully");
     return client.db("hobbyhubDB");
   } catch (error) {
