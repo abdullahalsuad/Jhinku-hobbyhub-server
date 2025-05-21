@@ -87,6 +87,8 @@ const removeHobbyGroup = async (req, res) => {
     if (result.deletedCount === 0) {
       return res.status(404).json({ message: "Hobby Groups not found." });
     }
+
+    res.json(result);
   } catch (err) {
     res.status(500).json({ error: "Failed delete  sushi" });
   }
