@@ -3,6 +3,8 @@ const {
   getSingleHobbyGroup,
   getUserHobbyGroups,
   createHobbyGroup,
+  updateHobbyGroup,
+  deleteHobbyGroup,
 } = require("../models/hobbyGroupsModel");
 
 // Controller to fetch ALL hobbyGroups items
@@ -59,11 +61,42 @@ const addHobbyGroup = async (req, res) => {
 };
 
 // Controller to update hobbyGroup
+const updateSingleHobbyGroup = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const result = await updateHobbyGroup(id, req.body);
+
+    if (result.matchedCount === 0) {
+      return res.status(404).json({ message: "Hobby group not found" });
+    }
+
+    res.json(result);
+  } catch (err) {
+    console.error("Error updating sushi:", err);
+    res.status(500).json({ error: "Failed to update hobby group" });
+  }
+};
+
 // Controller to delete hobbyGroup
+const removeHobbyGroup = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await deleteHobbyGroup(id);
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: "Hobby Groups not found." });
+    }
+  } catch (err) {
+    res.status(500).json({ error: "Failed delete  sushi" });
+  }
+};
 
 module.exports = {
   getHobbyGroups,
   addHobbyGroup,
   singleHobbyGroup,
   userHobbyGroups,
+  updateSingleHobbyGroup,
+  removeHobbyGroup,
 };

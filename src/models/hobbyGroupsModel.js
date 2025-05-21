@@ -34,8 +34,22 @@ const createHobbyGroup = async (hobbyGroup) => {
 };
 
 // Update a hobby group by its id
+const updateHobbyGroup = async (id, updatedData) => {
+  const result = await hobbyGroupsCollection.updateOne(
+    { _id: new ObjectId(id) },
+    { $set: updatedData },
+    { upsert: false } // or true if you want to insert if not found
+  );
+  return result;
+};
 
 // Delete a hobby group by its id
+const deleteHobbyGroup = async (id) => {
+  const result = await hobbyGroupsCollection.deleteOne({
+    _id: new ObjectId(id),
+  });
+  return result;
+};
 
 module.exports = {
   injectDB,
@@ -43,4 +57,6 @@ module.exports = {
   getSingleHobbyGroup,
   getUserHobbyGroups,
   createHobbyGroup,
+  updateHobbyGroup,
+  deleteHobbyGroup,
 };
