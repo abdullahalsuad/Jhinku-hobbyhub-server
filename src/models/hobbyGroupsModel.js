@@ -27,6 +27,21 @@ const getUserHobbyGroups = async (email) => {
   return result;
 };
 
+// Fetches Ongoing and Upcoming Hobby Groups
+const getAllOngoingHobbyGroups = async () => {
+  const today = new Date().toISOString().split("T")[0]; // Format: YYYY-MM-DD
+
+  const result = await hobbyGroupsCollection
+    .find({
+      startDate: { $gte: today },
+    })
+    .sort({ startDate: 1 }) // Sort by nearest date
+    .limit(6)
+    .toArray();
+
+  return result;
+};
+
 // Create new hobby group in the database
 const createHobbyGroup = async (hobbyGroup) => {
   const result = await hobbyGroupsCollection.insertOne(hobbyGroup);
@@ -56,6 +71,7 @@ module.exports = {
   getAllHobbyGroups,
   getSingleHobbyGroup,
   getUserHobbyGroups,
+  getAllOngoingHobbyGroups,
   createHobbyGroup,
   updateHobbyGroup,
   deleteHobbyGroup,

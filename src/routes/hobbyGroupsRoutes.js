@@ -3,6 +3,7 @@ const router = express.Router();
 
 const {
   getHobbyGroups,
+  getOngoingHobbyGroups,
   singleHobbyGroup,
   userHobbyGroups,
   addHobbyGroup,
@@ -18,6 +19,9 @@ router.get("/groups/:id", singleHobbyGroup);
 
 // GET user's hobby groups
 router.get("/groups/user/:email", userHobbyGroups);
+
+// GET Ongoing and Upcoming Hobby Groups
+router.get("/ongoing", getOngoingHobbyGroups);
 
 // POST new hobby group
 router.post("/groups", addHobbyGroup);

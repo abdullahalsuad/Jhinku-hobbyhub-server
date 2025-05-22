@@ -2,6 +2,7 @@ const {
   getAllHobbyGroups,
   getSingleHobbyGroup,
   getUserHobbyGroups,
+  getAllOngoingHobbyGroups,
   createHobbyGroup,
   updateHobbyGroup,
   deleteHobbyGroup,
@@ -11,6 +12,8 @@ const {
 const getHobbyGroups = async (req, res) => {
   try {
     const hobbyGroups = await getAllHobbyGroups();
+
+    // sending response to client
     res.json(hobbyGroups);
   } catch (err) {
     res.status(500).json({ error: "Failed to get hobby groups" });
@@ -27,6 +30,7 @@ const singleHobbyGroup = async (req, res) => {
       return res.status(404).json({ message: "hobby group not found." });
     }
 
+    // sending response to client
     res.json(result);
   } catch (err) {
     res.status(500).json({ error: "Failed to get single hobby group" });
@@ -44,9 +48,20 @@ const userHobbyGroups = async (req, res) => {
       return res.status(404).json({ message: "hobby groups not found." });
     }
 
+    // sending response to client
     res.json(result);
   } catch (err) {
     res.status(500).json({ error: "Failed to get user's hobby groups" });
+  }
+};
+
+// Controller to fetch ongoing & upcoming hobby groups
+const getOngoingHobbyGroups = async (req, res) => {
+  try {
+    const result = await getAllOngoingHobbyGroups();
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to get ongoing hobby groups" });
   }
 };
 
@@ -54,6 +69,8 @@ const userHobbyGroups = async (req, res) => {
 const addHobbyGroup = async (req, res) => {
   try {
     const newHobbyGroup = await createHobbyGroup(req.body);
+
+    // sending response to client
     res.json(newHobbyGroup);
   } catch (err) {
     res.status(500).json({ error: "Failed to add hobby groups" });
@@ -71,6 +88,7 @@ const updateSingleHobbyGroup = async (req, res) => {
       return res.status(404).json({ message: "Hobby group not found" });
     }
 
+    // sending response to client
     res.json(result);
   } catch (err) {
     console.error("Error updating sushi:", err);
@@ -88,6 +106,7 @@ const removeHobbyGroup = async (req, res) => {
       return res.status(404).json({ message: "Hobby Groups not found." });
     }
 
+    // sending response to client
     res.json(result);
   } catch (err) {
     res.status(500).json({ error: "Failed delete  sushi" });
@@ -98,6 +117,7 @@ module.exports = {
   getHobbyGroups,
   addHobbyGroup,
   singleHobbyGroup,
+  getOngoingHobbyGroups,
   userHobbyGroups,
   updateSingleHobbyGroup,
   removeHobbyGroup,
