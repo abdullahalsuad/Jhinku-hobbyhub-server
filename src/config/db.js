@@ -1,24 +1,13 @@
-const { MongoClient, ServerApiVersion } = require("mongodb");
-const uri = process.env.MONGO_URI;
+import mongoose from "mongoose";
 
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  },
-});
-
-async function connectDB() {
+const connectDB = async () => {
   try {
-    // * need to comment on deploy
-    // await client.connect();
-    console.log("MongoDB connected successfully");
-    return client.db("hobbyhubDB");
-  } catch (error) {
-    console.error("Error connecting to MongoDB:", error);
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("✅ MongoDB connected");
+  } catch (err) {
+    console.error("❌ MongoDB connection error:", err);
     process.exit(1);
   }
-}
+};
 
-module.exports = connectDB;
+export default connectDB;
