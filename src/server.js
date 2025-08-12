@@ -1,32 +1,31 @@
-import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const connectDB = require("./config/db");
 
-import connectDB from "./config/db.js";
+const hobbyGroupsModel = require("./models/hobbyGroupsModel");
+const hobbyGroupsRoutes = require("./routes/hobbyGroupsRoutes");
 
-// routes
-import articleRoutes from "./routes/articleRoutes.js";
-
-dotenv.config();
 const app = express();
-const PORT = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
-// Connect to DB
-connectDB();
-
-// Routes for articles
-app.use("/api/v1", articleRoutes);
-
-// Basic route
-app.get("/", (req, res) => {
-  res.json({ message: "BrainWave Server  is running" });
+// Connect to DB and inject collection into model
+connectDB().then(async (db) => {
+  await hobbyGroupsModel.injectDB(db);
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+// Routes
+app.use("/api", hobbyGroupsRoutes);
+
+// Root route
+app.get("/", (req, res) => {
+  res.send("Sushi server is running");
+});
+
+app.listen(port, () => {
+  console.log(`Server running on http://localhost:${port}`);
 });

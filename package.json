@@ -1,6 +1,6 @@
 {
-  "name": "brainwave-server",
-  "type": "module",
+  "name": "jhinku-hobbyhub-server",
+  "version": "1.0.0",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
@@ -15,8 +15,6 @@
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
-    "firebase-admin": "^13.4.0",
-    "mongodb": "^6.16.0",
-    "mongoose": "^8.15.1"
+    "mongodb": "^6.16.0"
   }
 }
